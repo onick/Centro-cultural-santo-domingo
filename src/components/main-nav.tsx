@@ -51,13 +51,13 @@ export function MainNav() {
                 </Link>
 
                 {/* Desktop Nav */}
-                <nav className="hidden md:flex items-center gap-8">
+                <nav className="hidden xl:flex items-center gap-6">
                     {navItems.map((item) => (
                         <Link
                             key={item.href}
                             href={item.href}
                             className={cn(
-                                "text-sm font-medium tracking-widest uppercase hover:opacity-70 transition-opacity",
+                                "text-sm font-medium tracking-wide uppercase hover:opacity-70 transition-opacity whitespace-nowrap",
                                 isScrolled || !isHome ? "text-foreground" : "text-white/90",
                                 pathname === item.href && (isScrolled || !isHome) ? "border-b-2 border-primary" : ""
                             )}
@@ -69,7 +69,7 @@ export function MainNav() {
                         variant="outline"
                         size="sm"
                         className={cn(
-                            "rounded-none px-6 border-[#F79523] text-[#F79523] hover:bg-[#F79523] hover:text-white transition-colors",
+                            "rounded-none px-6 border-[#F79523] text-[#F79523] hover:bg-[#F79523] hover:text-white transition-colors whitespace-nowrap",
                             isScrolled || !isHome ? "bg-transparent" : "bg-transparent"
                         )}
                         asChild
@@ -84,7 +84,7 @@ export function MainNav() {
                 <Button
                     variant="ghost"
                     size="icon"
-                    className={cn("md:hidden", isScrolled || !isHome ? "text-foreground" : "text-white")}
+                    className={cn("xl:hidden", isScrolled || !isHome ? "text-foreground" : "text-white")}
                     onClick={() => setIsOpen(!isOpen)}
                 >
                     {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -93,7 +93,7 @@ export function MainNav() {
 
             {/* Mobile Nav */}
             {isOpen && (
-                <div className="absolute top-full left-0 w-full bg-background border-b p-4 md:hidden animate-in slide-in-from-top-5">
+                <div className="absolute top-full left-0 w-full bg-background border-b p-4 xl:hidden animate-in slide-in-from-top-5">
                     <nav className="flex flex-col gap-4">
                         {navItems.map((item) => (
                             <Link
