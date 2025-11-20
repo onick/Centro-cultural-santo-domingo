@@ -116,29 +116,48 @@ export default function LibraryPage() {
                                 transition={{ delay: index * 0.1 }}
                             >
                                 <Link href={`/library/${category.id}`}>
-                                    <Card className={`p-8 h-full hover:shadow-xl transition-all duration-300 group cursor-pointer border-0 bg-gradient-to-br ${category.color}`}>
-                                        <div className="flex flex-col h-full">
-                                            <div className="flex items-start justify-between mb-6">
-                                                <div className="h-14 w-14 bg-primary/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                                                    <category.icon className="h-7 w-7 text-primary" />
+                                    <Card className="p-0 h-full hover:shadow-2xl transition-all duration-500 group cursor-pointer border border-zinc-200 dark:border-zinc-800 bg-[#FAF9F6] dark:bg-zinc-900 overflow-hidden">
+                                        <div className="p-8 border-l-4 border-primary">
+                                            {/* Header tipo ficha bibliográfica */}
+                                            <div className="flex items-start justify-between mb-6 pb-4 border-b border-zinc-300 dark:border-zinc-700">
+                                                <div className="flex items-center gap-4">
+                                                    <div className="h-12 w-12 border-2 border-primary/20 rounded flex items-center justify-center">
+                                                        <category.icon className="h-6 w-6 text-primary" />
+                                                    </div>
+                                                    <div>
+                                                        <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-1 font-mono">
+                                                            Categoría
+                                                        </div>
+                                                        <h3 className="text-2xl font-serif font-bold tracking-tight">
+                                                            {category.title}
+                                                        </h3>
+                                                    </div>
                                                 </div>
-                                                <div className="text-sm font-bold text-primary bg-primary/10 px-3 py-1 rounded-full">
-                                                    {category.count} recursos
+                                                <div className="text-right">
+                                                    <div className="text-xs uppercase tracking-widest text-muted-foreground mb-1 font-mono">
+                                                        Recursos
+                                                    </div>
+                                                    <div className="text-3xl font-serif font-bold text-primary">
+                                                        {category.count}
+                                                    </div>
                                                 </div>
                                             </div>
 
-                                            <div className="flex-1">
-                                                <h3 className="text-2xl font-serif font-bold mb-3 group-hover:text-primary transition-colors">
-                                                    {category.title}
-                                                </h3>
-                                                <p className="text-muted-foreground leading-relaxed">
-                                                    {category.description}
-                                                </p>
-                                            </div>
+                                            {/* Descripción */}
+                                            <p className="text-muted-foreground leading-relaxed mb-6 text-sm">
+                                                {category.description}
+                                            </p>
 
-                                            <div className="mt-6 pt-6 border-t flex items-center gap-2 text-sm font-medium text-primary group-hover:gap-3 transition-all">
-                                                <span>Explorar colección</span>
-                                                <ExternalLink className="h-4 w-4" />
+                                            {/* Footer */}
+                                            <div className="flex items-center justify-between pt-4 border-t border-zinc-300 dark:border-zinc-700">
+                                                <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-muted-foreground">
+                                                    <div className="h-1 w-8 bg-primary"></div>
+                                                    <span>Disponible</span>
+                                                </div>
+                                                <div className="flex items-center gap-2 text-sm font-medium text-primary group-hover:gap-3 transition-all">
+                                                    <span>Explorar</span>
+                                                    <ExternalLink className="h-4 w-4" />
+                                                </div>
                                             </div>
                                         </div>
                                     </Card>
@@ -169,25 +188,28 @@ export default function LibraryPage() {
                     <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
                         {[
                             {
-                                type: "Libro Digital",
-                                title: "Historia del Arte Dominicano",
+                                type: "Biografía",
+                                title: "Pedro Mir en Familia",
+                                author: "Familia Mir",
+                                year: "2023",
+                                pages: "280 págs",
+                                cover: "/biografia/pedro mir en familia.png"
+                            },
+                            {
+                                type: "Biografía",
+                                title: "Dominicanas de Voluntad en la Diáspora",
                                 author: "Varios Autores",
                                 year: "2023",
-                                pages: "350 págs"
+                                pages: "320 págs",
+                                cover: "/biografia/dominicanas de voluntad en la diaspora.png"
                             },
                             {
-                                type: "Revista Cultural",
-                                title: "Hojas de Cultura",
-                                author: "Banreservas",
-                                year: "2024",
-                                pages: "120 págs"
-                            },
-                            {
-                                type: "Ensayo",
-                                title: "Identidad y Migración",
+                                type: "Biografía",
+                                title: "Dominicanas Fuera de Serie",
                                 author: "Colección Especial",
-                                year: "2023",
-                                pages: "200 págs"
+                                year: "2024",
+                                pages: "250 págs",
+                                cover: "/biografia/dominicanaas fuera de serie.png"
                             }
                         ].map((resource, index) => (
                             <motion.div
@@ -198,8 +220,13 @@ export default function LibraryPage() {
                                 transition={{ delay: index * 0.1 }}
                             >
                                 <Card className="p-6 hover:shadow-lg transition-shadow">
-                                    <div className="aspect-[3/4] bg-gradient-to-br from-primary/20 to-primary/5 rounded mb-4 flex items-center justify-center">
-                                        <BookOpen className="h-16 w-16 text-primary/40" />
+                                    <div className="aspect-[3/4] bg-zinc-100 dark:bg-zinc-800 rounded mb-4 overflow-hidden">
+                                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                                        <img
+                                            src={resource.cover}
+                                            alt={resource.title}
+                                            className="w-full h-full object-cover"
+                                        />
                                     </div>
                                     <div className="mb-2">
                                         <span className="text-xs font-semibold uppercase tracking-wider text-primary">

@@ -28,7 +28,7 @@ export function Footer() {
                             <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="h-10 w-10 rounded-full border border-white/30 flex items-center justify-center hover:bg-white hover:text-zinc-900 transition-colors">
                                 <Facebook className="h-5 w-5" />
                             </a>
-                            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="h-10 w-10 rounded-full border border-white/30 flex items-center justify-center hover:bg-white hover:text-zinc-900 transition-colors">
+                            <a href="https://www.instagram.com/centroculturalbr/" target="_blank" rel="noopener noreferrer" className="h-10 w-10 rounded-full border border-white/30 flex items-center justify-center hover:bg-white hover:text-zinc-900 transition-colors">
                                 <Instagram className="h-5 w-5" />
                             </a>
                             <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="h-10 w-10 rounded-full border border-white/30 flex items-center justify-center hover:bg-white hover:text-zinc-900 transition-colors">
@@ -112,8 +112,8 @@ export function Footer() {
                             </li>
                             <li className="flex items-center gap-3">
                                 <Phone className="h-5 w-5 text-[#F79523] flex-shrink-0" />
-                                <a href="tel:+18095550100" className="text-white/70 hover:text-white transition-colors">
-                                    (809) 555-0100
+                                <a href="tel:+18099602094" className="text-white/70 hover:text-white transition-colors">
+                                    (809) 960-2094
                                 </a>
                             </li>
                             <li className="flex items-center gap-3">

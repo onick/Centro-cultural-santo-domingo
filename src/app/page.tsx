@@ -6,6 +6,8 @@ import { Card } from "@/components/ui/card";
 import { CalendarDays, MapPin, Clock, ArrowRight, BookOpen, Users, Building2 } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { supabase } from "@/lib/supabase";
 
 const featuredExhibitions = [
   {
@@ -25,36 +27,6 @@ const featuredExhibitions = [
     image: "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?q=80&w=2960&auto=format&fit=crop",
     link: "/exhibitions/heritage",
     badge: "Destacado"
-  }
-];
-
-const upcomingEvents = [
-  {
-    id: 1,
-    title: "Concierto de Piano Clásico",
-    date: "2024-12-15",
-    time: "19:00",
-    location: "Auditorio Principal",
-    image: "https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?q=80&w=2940&auto=format&fit=crop",
-    category: "Música"
-  },
-  {
-    id: 2,
-    title: "Ciclo de Cine Dominicano",
-    date: "2024-12-18",
-    time: "18:00",
-    location: "Sala de Proyecciones",
-    image: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2670&auto=format&fit=crop",
-    category: "Cine"
-  },
-  {
-    id: 3,
-    title: "Taller de Fotografía Documental",
-    date: "2024-12-20",
-    time: "10:00",
-    location: "Aula 3",
-    image: "https://images.unsplash.com/photo-1452587925148-ce544e77e70d?q=80&w=2874&auto=format&fit=crop",
-    category: "Taller"
   }
 ];
 
@@ -85,6 +57,24 @@ const stats = [
 ];
 
 export default function HomePage() {
+  const [upcomingEvents, setUpcomingEvents] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function fetchEvents() {
+      const { data, error } = await supabase
+        .from('events')
+        .select('*')
+        .gte('date', new Date().toISOString().split('T')[0])
+        .order('date', { ascending: true })
+        .limit(3);
+
+      if (!error && data) {
+        setUpcomingEvents(data);
+      }
+    }
+
+    fetchEvents();
+  }, []);
   return (
     <div className="min-h-screen">
       {/* Hero Section - Full Screen */}
@@ -127,7 +117,7 @@ export default function HomePage() {
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button size="lg" variant="secondary" className="rounded-none h-14 px-10 text-lg bg-white text-zinc-900 hover:bg-white/90" asChild>
+            <Button size="lg" variant="outline" className="rounded-none h-14 px-10 text-lg bg-white text-zinc-900 border-white hover:bg-zinc-100 hover:text-zinc-900" asChild>
               <Link href="/branches">Planea tu Visita</Link>
             </Button>
           </motion.div>
@@ -255,7 +245,7 @@ export default function HomePage() {
                   <div className="relative h-48 overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={event.image}
+                      src={event.image_url || 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2940&auto=format&fit=crop'}
                       alt={event.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
@@ -372,7 +362,7 @@ export default function HomePage() {
               <Button size="lg" variant="secondary" className="rounded-none h-14 px-10 text-lg" asChild>
                 <Link href="/branches">Planificar Visita</Link>
               </Button>
-              <Button size="lg" variant="outline" className="rounded-none h-14 px-10 text-lg border-white text-white hover:bg-white hover:text-primary" asChild>
+              <Button size="lg" className="rounded-none h-14 px-10 text-lg bg-white text-zinc-900 border-2 border-white hover:bg-zinc-100 hover:text-zinc-900" asChild>
                 <Link href="/about">Conoce Más</Link>
               </Button>
             </div>

@@ -1,56 +1,28 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CalendarDays, MapPin, Clock, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { PageHero } from "@/components/page-hero";
+import { supabase } from "@/lib/supabase";
 
-const events = [
-    {
-        id: 1,
-        title: "Concierto de Jazz Bajo las Estrellas",
-        description: "Una noche mágica con los mejores exponentes del Jazz local e internacional.",
-        date: "2023-11-25",
-        time: "20:00",
-        location: "Jardín Principal, Santo Domingo",
-        category: "Concierto",
-        image: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?q=80&w=2664&auto=format&fit=crop"
-    },
-    {
-        id: 2,
-        title: "Ciclo de Cine: Clásicos Dominicanos",
-        description: "Proyección de películas emblemáticas del cine dominicano restauradas.",
-        date: "2023-11-28",
-        time: "19:00",
-        location: "Auditorio, Santiago",
-        category: "Cine",
-        image: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2670&auto=format&fit=crop"
-    },
-    {
-        id: 3,
-        title: "Taller de Pintura para Niños",
-        description: "Actividad creativa para niños de 8 a 12 años. Materiales incluidos.",
-        date: "2023-12-02",
-        time: "10:00",
-        location: "Sala de Talleres, Santo Domingo",
-        category: "Taller",
-        image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=2671&auto=format&fit=crop"
-    },
-    {
-        id: 4,
-        title: "Conferencia: Historia del Arte Caribeño",
-        description: "Un recorrido por las influencias y evolución del arte en el Caribe.",
-        date: "2023-12-05",
-        time: "18:30",
-        location: "Salón Multiuso, Santiago",
-        category: "Conferencia",
-        image: "https://images.unsplash.com/photo-1544531586-fde5298cdd40?q=80&w=2670&auto=format&fit=crop"
+// Función para obtener eventos desde Supabase
+async function getEvents() {
+    const { data: events, error } = await supabase
+        .from('events')
+        .select('*')
+        .order('date', { ascending: true });
+
+    if (error) {
+        console.error('Error fetching events:', error);
+        return [];
     }
-];
 
-export default function EventsPage() {
+    return events || [];
+}
+
+export default async function EventsPage() {
+    const events = await getEvents();
+
     return (
         <div className="min-h-screen bg-background">
             {/* Header */}
@@ -64,12 +36,8 @@ export default function EventsPage() {
             <div className="container py-16">
                 <div className="grid gap-12">
                     {events.map((event, index) => (
-                        <motion.div
+                        <div
                             key={event.id}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.1 }}
                             className="group grid grid-cols-1 lg:grid-cols-12 gap-8 items-center border-b pb-12 last:border-0"
                         >
                             {/* Date Column */}
@@ -89,7 +57,7 @@ export default function EventsPage() {
                             <div className="lg:col-span-4 overflow-hidden aspect-[4/3] lg:aspect-[3/2] relative bg-muted">
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img
-                                    src={event.image}
+                                    src={event.image_url || 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2670&auto=format&fit=crop'}
                                     alt={event.title}
                                     className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
                                 />
@@ -128,7 +96,7 @@ export default function EventsPage() {
                                     </Button>
                                 </div>
                             </div>
-                        </motion.div>
+                        </div>
                     ))}
                 </div>
             </div>

@@ -9,7 +9,7 @@ const branches = [
         id: "santo-domingo",
         name: "Sede Principal - Santo Domingo",
         address: "Calle Las Damas, Zona Colonial, Santo Domingo",
-        phone: "(809) 555-0100",
+        phone: "(809) 960-2094",
         email: "info.sd@centrocultural.do",
         hours: "Lun - Dom: 9:00 AM - 8:00 PM",
         image: "/fachada-santo-domingo.jpg",
